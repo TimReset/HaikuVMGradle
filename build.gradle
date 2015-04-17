@@ -1,0 +1,72 @@
+import java.text.MessageFormat
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.6
+
+repositories {
+    mavenCentral()
+    jcenter()
+
+/*
+Локальный maven репозиторий для проекта. Нужен, чтобы предоставить зависимотсти, которых нет в центральном maven репозитории.
+Используется вместо простой папки с jar файлами, чтобы зависимости можно было предоставить вместе с JavaDoc и Source.
+
+Для добавления jar в этот репозиторий нужно выполнить следующую команду:
+mvn deploy:deploy-file -Durl=file://D:\project\acube_gradle_trunk\repo\ -Dfile=gwtext.jar -DgroupId=com.gwt-ext -DartifactId=gwt-ext -Dpackaging=jar -Dversion=2.0.6.1 -Djavadoc=gwtext-javadoc.jar -Dsources=gwtext-src.jar
+
+Для добавления SmartGWT в этот репозиторий нужно выполнить следующую команду
+(т.к. SmartGwt не содержит своего репозитория, но у него есть maven плагин, который позволяет просто добавлять SmartGwt 
+в локальный репозиторий):  
+mvn com.isomorphic:isc-maven-plugin:deploy -DrepositoryUrl=file://D:\project\acube_gradle_trunk\repo\ -Dproduct=SMARTGWT -Dlicense=LGPL -DbuildNumber=5.0p -DbuildDate=2014-10-12
+
+-DbuildDate=2014-10-12 - необязательно, если не указывать будет скачана последняя версия
+-DbuildNumber=5.0p - "p" означает что это версия только с патчами, без глобальных изменений (использовать нужно только её).
+Ещё есть версия "d" - developer. Там содержится новый нестабильный функционал. Её использовать в production не рекомендуется.
+*/
+    maven {
+        url "./repo"
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+private String getPropertyOrException(String propertyName, String exampleValue) {
+    if (!project.hasProperty(propertyName)) {
+        final String messageFormat = "Not set param \"{0}\". E.g.  -P{0}={1}";
+        throw new IllegalArgumentException(MessageFormat.format(messageFormat, propertyName, exampleValue));
+    } else {
+        return project.property(propertyName);
+    }
+}
+
+task buildAndDeploy(type: Exec) {
+    final String HAIKU_VM_HOME = project.hasProperty("haiku_vm_home") ? project.property("haiku_vm_home") : "C:/";
+
+    workingDir "${HAIKU_VM_HOME}/myCProject/"
+
+    final String COM_PORT = project.hasProperty("com_port") ? project.property("com_port") : "COM1";
+
+    final String JAVA_FILE_PATH = project.hasProperty("java_file_path") ? project.property("java_file_path") : "Test.java";
+
+    final String fileNameWithOutExtension;
+
+    String fileName = new File(JAVA_FILE_PATH).getName();
+    fileNameWithOutExtension = fileName.substring(0, fileName.indexOf("."));
+
+    //on windows:
+//    commandLine "${HAIKU_VM_HOME}/bin/haiku.bat -v --Config arduino --Config:Port ${COM_PORT} -o ${fileNameWithOutExtension}.hex ${JAVA_FILE_PATH}"
+    commandLine "${HAIKU_VM_HOME}/bin/haiku.bat"
+    args("-v", "--Config", "arduino", "--Config:Port", "${COM_PORT}", "-o", "${fileNameWithOutExtension}.hex", "${JAVA_FILE_PATH}");
+    /*
+    cd haikuVM\myCProject  
+C:\haikuVM\bin\haiku -v --Config arduino --Config:Port com5 -o BlinkWithThread.hex C:\haikuVM\examples\src\main\java\arduino\tutorial\BlinkWithThread.java  
+     */
+
+}
