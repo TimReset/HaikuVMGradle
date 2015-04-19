@@ -1,0 +1,15 @@
+apply plugin: 'java'
+
+version = "1.2.3"
+
+sourceCompatibility = 1.6
+
+dependencies {
+   runtime project(":haiku_rt")
+}
+
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+

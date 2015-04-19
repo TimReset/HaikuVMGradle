@@ -1,3 +1,12 @@
-
-
-
+/bootstrap/build
+/build
+/example/build
+/haiku_rt/build
+/my_project/build
+/.gradle
+/.idea
+/HaikuVmExample.iml
+/my_project/my_project.iml
+/haiku_rt/haiku_rt.iml
+/example/example.iml
+/bootstrap/bootstrap.iml

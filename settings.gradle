@@ -1,2 +1,5 @@
-rootProject.name = 'HaikuVmExample'
-
+//rootProject.name = 'HaikuVmExample'
+include "haiku_rt"
+include "my_project"
+include "example"
+include "bootstrap"
