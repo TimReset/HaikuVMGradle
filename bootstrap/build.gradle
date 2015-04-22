@@ -4,12 +4,23 @@ version = "1.2.3"
 
 sourceCompatibility = 1.6
 
+evaluationDependsOn(':haiku_rt')
+
 dependencies {
-   runtime project(":haiku_rt")
+   compile project(":haiku_rt")
 }
 
+tasks.withType(JavaCompile) {
+}
+
+//sourceSets.main.compileClasspath = sourceSets.main.compileClasspath
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+//    options."bootClasspath/p" = "D:\\arduino\\HaikuVMGradle\\haiku_rt\\build\\libs\\haiku_rt-1.2.3.jar"
+    options.compilerArgs << "-Xbootclasspath/p:"+project(":haiku_rt").sourceSets.main.output.classesDir
+//    options.compilerArgs << "-Xbootclasspath/p:D:\\arduino\\HaikuVMGradle\\haiku_rt\\build\\libs\\haiku_rt-1.2.3.jar"
+//             += ";"
+
 }
 

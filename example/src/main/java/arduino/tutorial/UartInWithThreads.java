@@ -4,10 +4,10 @@ import static haiku.avr.lib.arduino.WProgram.*;
 /**
 avrdude: 10904 bytes of flash verified
 
-Für N=1: 710 chars read in 753 msec -> 0.942895 chars/msec
-Für N=2: 710 chars read in 864 msec -> 0.821759 chars/msec
-Für N=3: 540 chars read in 852 msec -> 0.6338028 chars/msec
-Für N=5: 350 chars read in 736 msec -> 0.475543 chars/msec
+ N=1: 710 chars read in 753 msec -> 0.942895 chars/msec
+ N=2: 710 chars read in 864 msec -> 0.821759 chars/msec
+ N=3: 540 chars read in 852 msec -> 0.6338028 chars/msec
+ N=5: 350 chars read in 736 msec -> 0.475543 chars/msec
  */
 public class UartInWithThreads implements Runnable {
 	static boolean ready=false;

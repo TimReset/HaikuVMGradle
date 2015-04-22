@@ -6,6 +6,7 @@
 /.gradle
 /.idea
 /HaikuVmExample.iml
+/HaikuVMGradle.iml
 /my_project/my_project.iml
 /haiku_rt/haiku_rt.iml
 /example/example.iml

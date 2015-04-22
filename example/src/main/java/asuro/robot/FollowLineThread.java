@@ -28,7 +28,7 @@ public class FollowLineThread {
 		long left, right;
 		
 		
-		// Weiﬂabgleich in avg[]
+		//  in avg[]
 		SetMotorPower(0, 0);	// Beide Motoren stop
 		FrontLED(ON); 			// Linienbeleuchtung einschalten
 		StatusLED(OFF);
