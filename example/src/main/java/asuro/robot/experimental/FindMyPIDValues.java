@@ -9,9 +9,9 @@ import static java.lang.Math.*;
  *  totalConstLength=  400
  *  totalClassesLength=108
  * 
- * Ist trotzdem .text section um 1454 Bytes überschritten.
+ * Ist trotzdem .text section um 1454 Bytes ï¿½berschritten.
  * 
- * Da ist dann wohl die VM selbst ca 7000 Byte groß.
+ * Da ist dann wohl die VM selbst ca 7000 Byte groï¿½.
  * Vermutlich wg. double.
  * 
  * @author genom2
@@ -63,7 +63,7 @@ public class FindMyPIDValues {
 		}
 	};
 	
-	private static final double r=115.0/2; // Radius der Räder [mm]
+	private static final double r=115.0/2; // Radius der [mm]
 	private static final double u=2*PI*r; // [mm]
 	private static final int ticksu=256; // ticks pro Umfang
 
@@ -74,7 +74,7 @@ public class FindMyPIDValues {
 	//PID best={0.11 ,0.00001 ,44,0,0,0,0,0,1e10};
 
 	//PID best={0.124 ,0.0000095 ,47,0,0,0,0,0,1e10};
-	private static PID best=new PID(0.124 ,0 ,47,0,0,0,0,0,1e10); // I>0 führt evtl. zum overflow und umschlagen z.B: 3000 -> -3000
+	private static PID best=new PID(0.124 ,0 ,47,0,0,0,0,0,1e10); // I>0 f evtl. zum overflow und umschlagen z.B: 3000 -> -3000
 
 	/*
 	Software PID-Regler:
