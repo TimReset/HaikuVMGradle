@@ -1,0 +1,143 @@
+#
+#
+#
+#############################################################
+# generating c files
+#############################################################
+"C:\Program Files\Java\jdk1.7.0_75\bin\java.exe" "-Dhaikuvm.home=D:\software\haikuVM\bin\\.." "-DCOMMAND_NAME=haikulink" -classpath "D:\software\haikuVM\lib\pc\bcel-5.2.jar;D:\software\haikuVM\lib\pc\haikutools.jar;D:\software\haikuVM\lib\pc\RXTXcomm.jar" haikuvm.pc.tools.HaikuVM --bootclasspath "C:\Users\averin\AppData\Local\Temp\haikuvm;D:\software\haikuVM\lib\nxt\classes.jar" _custom_bootclasspath.bat -v --Config asuro --bootclasspath "D:\project\HaikuVMGradle\haiku_rt\build\libs\haiku_rt-1.2.3.jar;D:\project\HaikuVMGradle\bootstrap\build\libs\bootstrap-1.2.3.jar;D:\software\haikuVM\lib\nxt\classes.jar" -classpath D:\project\HaikuVMGradle\example\build\libs\example.jar D:\software\haikuVM\_examples\src\main\java\asuro\robot\experimental\FindMyPIDValues.java
+Looking for 'HaikuVM.properties' in path: 'D:\software\haikuVM\bin';'D:\software\haikuVM\config'
+Loaded from 'D:\software\haikuVM\config\HaikuVM.properties'
+
+$Version 1.2.3 $ $Id: HaikuVM.java 595 2014-11-02 22:09:51Z genom2 $
+
+
+#################### closure start on haiku.avr.lib.asuro.lib2_8_0_rc1.HaikuMicroKernel
+included; haiku.avr.lib.asuro.lib2_8_0_rc1.HaikuMicroKernel.main([Ljava/lang/String;)V
+included:   haiku.vm.MicroKernel.clinitHaikuMagic()V
+included:   asuro.robot.experimental.FindMyPIDValues.main([Ljava/lang/String;)V
+included:     haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.Init()V
+included:       haiku.avr.AVRDefines._BV(I)I
+included#         haiku.avr.AVRDefines.<clinit>()V
+included:       haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.ODOMETRIE_LED_OFF()V
+included:       haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.FrontLED(I)V
+included:       haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.BackLED(II)V
+included:       haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.StatusLED(I)V
+included:       haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.MotorDir(II)V
+included:       haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.MotorSpeed(II)V
+included:       haiku.avr.AVRDefines.sei()V
+included#       haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.<clinit>()V
+included:       haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1$1.<init>()V
+included:         java.lang.Object.<init>()V
+included:     asuro.robot.experimental.FindMyPIDValues.searchPID()V
+included#     asuro.robot.experimental.FindMyPIDValues.<clinit>()V
+included:     asuro.robot.experimental.FindMyPIDValues$PID.<init>(DDDDDDDDD)V
+included:   java.lang.Thread.currentThread()Ljava/lang/Thread;
+virtual :   stop()V
+#### rescan because:
+###### usage of (getstatic || setstatic) with new Class --> haiku.avr.ATmega8
+###### usage of (getstatic || setstatic) with new type --> java.lang.Runnable
+###### usage of (invokevirtual || invokeinterface) for message --> stop()V
+###### usage of message --> asuro.robot.experimental.FindMyPIDValues$PID.<init>(DDDDDDDDD)V
+###### usage of message --> asuro.robot.experimental.FindMyPIDValues.main([Ljava/lang/String;)V
+###### usage of message --> asuro.robot.experimental.FindMyPIDValues.searchPID()V
+###### usage of message --> haiku.avr.AVRDefines._BV(I)I
+###### usage of message --> haiku.avr.AVRDefines.sei()V
+###### usage of message --> haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1$1.<init>()V
+###### usage of message --> haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.BackLED(II)V
+###### usage of message --> haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.FrontLED(I)V
+###### usage of message --> haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.Init()V
+###### usage of message --> haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.MotorDir(II)V
+###### usage of message --> haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.MotorSpeed(II)V
+###### usage of message --> haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.ODOMETRIE_LED_OFF()V
+###### usage of message --> haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.StatusLED(I)V
+###### usage of message --> haiku.vm.MicroKernel.clinitHaikuMagic()V
+###### usage of message --> java.lang.Object.<init>()V
+###### usage of message --> java.lang.Thread.currentThread()Ljava/lang/Thread;
+###### usage of new Class (1 bc) --> asuro.robot.experimental.FindMyPIDValues
+###### usage of new Class (1 bc) --> asuro.robot.experimental.FindMyPIDValues$PID
+###### usage of new Class (1 bc) --> haiku.avr.AVRDefines
+###### usage of new Class (1 bc) --> haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1
+###### usage of new Class (1 bc) --> haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1$1
+###### usage of new Class (1 bc) --> java.lang.Thread
+###### usage of new Class (2 bc) --> haiku.vm.MicroKernel
+included:   asuro.robot.experimental.FindMyPIDValues.searchBetterCandidate()V
+included:   asuro.robot.experimental.FindMyPIDValues.decreaseSearchRange()V
+included:   haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.GREEN_LED_OFF()V
+included:   haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.RED_LED_OFF()V
+included:   haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.GREEN_LED_ON()V
+included:   haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.RED_LED_ON()V
+#### rescan because:
+###### usage of message --> asuro.robot.experimental.FindMyPIDValues.decreaseSearchRange()V
+###### usage of message --> asuro.robot.experimental.FindMyPIDValues.searchBetterCandidate()V
+###### usage of message --> haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.GREEN_LED_OFF()V
+###### usage of message --> haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.GREEN_LED_ON()V
+###### usage of message --> haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.RED_LED_OFF()V
+###### usage of message --> haiku.avr.lib.asuro.lib2_8_0_rc1.AsuroLib2_8_0_rc1.RED_LED_ON()V
+included:   asuro.robot.experimental.FindMyPIDValues$Serial.print(Ljava/lang/String;)V
+included:   asuro.robot.experimental.FindMyPIDValues$Serial.println(D)V
+included:   asuro.robot.experimental.FindMyPIDValues$Serial.print(I)V
+included:   asuro.robot.experimental.FindMyPIDValues.randomG()D
+included:   asuro.robot.experimental.FindMyPIDValues.testPID(DI)D
+included:   asuro.robot.experimental.FindMyPIDValues$Serial.print(D)V
+included:   asuro.robot.experimental.FindMyPIDValues$Serial.println()V
+included:   asuro.robot.experimental.FindMyPIDValues.random(II)D
+#### rescan because:
+###### usage of message --> asuro.robot.experimental.FindMyPIDValues$Serial.print(D)V
+###### usage of message --> asuro.robot.experimental.FindMyPIDValues$Serial.print(I)V
+###### usage of message --> asuro.robot.experimental.FindMyPIDValues$Serial.print(Ljava/lang/String;)V
+###### usage of message --> asuro.robot.experimental.FindMyPIDValues$Serial.println()V
+###### usage of message --> asuro.robot.experimental.FindMyPIDValues$Serial.println(D)V
+###### usage of message --> asuro.robot.experimental.FindMyPIDValues.random(II)D
+###### usage of message --> asuro.robot.experimental.FindMyPIDValues.randomG()D
+###### usage of message --> asuro.robot.experimental.FindMyPIDValues.testPID(DI)D
+###### usage of new Class (1 bc) --> asuro.robot.experimental.FindMyPIDValues$Serial
+included:   asuro.robot.experimental.FindMyPIDValues.delay(I)V
+included:   asuro.robot.experimental.FindMyPIDValues.millis()J
+included:   asuro.robot.experimental.FindMyPIDValues.getXticks()I
+included:   asuro.robot.experimental.FindMyPIDValues.getYticks()I
+included:   asuro.robot.experimental.FindMyPIDValues.regeln(Lasuro/robot/experimental/FindMyPIDValues$PID;II)I
+included:   asuro.robot.experimental.FindMyPIDValues.drive(I)I
+included:   asuro.robot.experimental.FindMyPIDValues.stopMotor()V
+Effective configuration for 'asuro':
+  APP_BASE = D:\software\haikuVM\bin\.
+  APP_NAME = FindMyPIDValues
+  AsuroTiming = 1
+  CC = avr-gcc
+  CC_OPT = $(HAIKU_CFLAGS) -Wall -Os -fpack-struct -fshort-enums -std=gnu99 -funsigned-char -funsigned-bitfields -ffunction-sections -fdata-sections -mmcu=$(HAIKU_TARGET) -DF_CPU=$(HAIKU_CLOCK)UL -I"$(HAIKU_APP_BASE)" -I"$(HAIKU_VM_BASE)" -c -o"$@" "$<"
+  CFLAGS = 
+  CLIBS = 
+  CXX = avr-g++
+  CXX_OPT = $(HAIKU_CFLAGS) -Wall -Os -fpack-struct -fshort-enums            -funsigned-char -funsigned-bitfields -ffunction-sections -fdata-sections -mmcu=$(HAIKU_TARGET) -DF_CPU=$(HAIKU_CLOCK)UL -I"$(HAIKU_APP_BASE)" -I"$(HAIKU_VM_BASE)" -c -o"$@" "$<"
+  Char = HAIKU_CHAR_8
+  Clock = 8000000
+  Config = asuro
+  Extends = avr
+  Extension = .hex
+  GC = HAIKU_StopTheWorldGC
+  HAIKUVM4C = ./haikuVM
+  HOME = D:\software\haikuVM
+  IncrementalGCSlice = 10
+  InitialMainThreadStackSize = 142
+  InitialOtherThreadStackSize = 45
+  LDFLAGS = -Wl,-Map,$(HAIKU_APP_NAME).map -Wl,--gc-sections -mmcu=$(HAIKU_TARGET) -o"$(HAIKU_APP_NAME).elf" -lc -lm $(OBJS) $(USER_OBJS) $(HAIKU_CLIBS) $(LIBS)
+  LINKER = avr-g++
+  MemorySize = (RAMEND-0x100) - 300
+  MicroKernel = haiku.avr.lib.asuro.lib2_8_0_rc1.HaikuMicroKernel
+  MillisDividend = 256
+  MillisDivisor = 125
+  MillisPrescale = 64
+  Mode = HAIKU_16_32
+  Output = $(HAIKU_APP_NAME)$(HAIKU_EXTENSION)
+  PanicExceptions = 0
+  PanicSupport = 0
+  Port = com17
+  Target = atmega8
+  Threads = 0
+  TimerInterrupt = SIG_OVERFLOW2
+  Upload = cmd /c start ASUROFlash155
+  UserMain = null
+  VM_BASE = ../../HaikuVM
+
+#############################################################
+# error while generating c files
+#############################################################

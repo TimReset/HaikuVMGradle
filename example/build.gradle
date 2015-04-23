@@ -13,6 +13,5 @@ dependencies {
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
     options.compilerArgs << "-Xbootclasspath/p:"+project(":haiku_rt").sourceSets.main.output.classesDir
-
 }
 

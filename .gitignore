@@ -10,3 +10,6 @@
 /haiku_rt/haiku_rt.iml
 /example/example.iml
 /bootstrap/bootstrap.iml
+
+/haiku_vm/bin/target
+/haiku_vm/bin/HaikuVM
