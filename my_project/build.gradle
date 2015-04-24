@@ -1,6 +1,6 @@
 apply plugin: 'java'
 
-sourceCompatibility = 1.6
+sourceCompatibility = 1.7
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -28,27 +28,26 @@ mvn com.isomorphic:isc-maven-plugin:deploy -DrepositoryUrl=file://D:\project\acu
     }
 }
 
+evaluationDependsOn(':haiku_rt')
+evaluationDependsOn(':bootstrap')
+
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+    options.compilerArgs << "-Xbootclasspath/p:" + project(":haiku_rt").sourceSets.main.output.classesDir
 }
 
 dependencies {
+    compile project(":haiku_rt")
+    compile project(":bootstrap")
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
-private String getPropertyOrException(String propertyName, String exampleValue) {
-    if (!project.hasProperty(propertyName)) {
-        final String messageFormat = "Not set param \"{0}\". E.g.  -P{0}={1}";
-        throw new IllegalArgumentException(MessageFormat.format(messageFormat, propertyName, exampleValue));
-    } else {
-        return project.property(propertyName);
-    }
-}
+
+final String HAIKU_VM_HOME = "${project.rootDir}/haiku_vm"
 
 task buildAndDeploy(type: Exec) {
-    final String HAIKU_VM_HOME = project.hasProperty("haiku_vm_home") ? project.property("haiku_vm_home") : "C:/";
 
-    workingDir "${HAIKU_VM_HOME}/myCProject/"
+    workingDir "${HAIKU_VM_HOME}/bin/"
 
     final String COM_PORT = project.hasProperty("com_port") ? project.property("com_port") : "COM1";
 
@@ -63,9 +62,80 @@ task buildAndDeploy(type: Exec) {
 //    commandLine "${HAIKU_VM_HOME}/bin/haiku.bat -v --Config arduino --Config:Port ${COM_PORT} -o ${fileNameWithOutExtension}.hex ${JAVA_FILE_PATH}"
     commandLine "${HAIKU_VM_HOME}/bin/haiku.bat"
     args("-v", "--Config", "arduino", "--Config:Port", "${COM_PORT}", "-o", "${fileNameWithOutExtension}.hex", "${JAVA_FILE_PATH}");
+//    args("-v", "--Config", "arduino", "--Config:Port", "${COM_PORT}", "-o", "${fileNameWithOutExtension}.hex", "${JAVA_FILE_PATH}");
     /*
     cd haikuVM\myCProject  
 C:\haikuVM\bin\haiku -v --Config arduino --Config:Port com5 -o BlinkWithThread.hex C:\haikuVM\examples\src\main\java\arduino\tutorial\BlinkWithThread.java  
      */
 
+}
+
+task haikulinkWindow(type: Exec, dependsOn: build) {
+    
+    doFirst {
+        //before run, create build dir
+        file("${project.buildDir}/haiku").mkdir()
+    }
+    
+    
+    workingDir "${project.buildDir}/haiku"
+
+    // Set port on linking.  -Pcom_port=COM10
+    final String COM_PORT = project.hasProperty("com_port") ? project.property("com_port") : "COM1";
+
+    // -Pprogram_name=ru.timreset.TestProgram
+    final String CLASS_NAME = project.hasProperty("class_name") ? project.property("class_name") : "com.error.NotSetProgramName";
+
+    final String fileNameWithOutExtension = CLASS_NAME.substring(CLASS_NAME.lastIndexOf(".") + 1, CLASS_NAME.length());
+
+    //on windows:
+//    commandLine "${HAIKU_VM_HOME}/bin/haiku.bat -v --Config arduino --Config:Port ${COM_PORT} -o ${fileNameWithOutExtension}.hex ${CLASS_NAME}"
+    commandLine "${HAIKU_VM_HOME}/bin/haikulink_custom_bootclasspath.bat"
+    /*
+     *     echo "%JAVA%" "-Dhaikuvm.home=%NXJ_HOME%" "-DCOMMAND_NAME=%NXJ_COMMAND%" -classpath "%NXJ_CP_PC%" haikuvm.pc.tools.HaikuVM %*
+     "%JAVA%" "-Dhaikuvm.home=%NXJ_HOME%" "-DCOMMAND_NAME=%NXJ_COMMAND%" -classpath "%NXJ_CP_PC%" haikuvm.pc.tools.HaikuVM %*
+     */
+    args "-v",
+            "--Config", "arduino",
+            "--Config:Port", "${COM_PORT}",
+            "-o", "${fileNameWithOutExtension}.hex",
+            "--bootclasspath", "\"${project(":haiku_rt").sourceSets.main.output.classesDir};${project(":bootstrap").sourceSets.main.output.classesDir};${HAIKU_VM_HOME}/lib/nxt/classes.jar\"",
+            "-classpath", "\"${sourceSets.main.output.classesDir}\"",
+            CLASS_NAME;
+//    args("-v", "--Config", "arduino", "--Config:Port", "${COM_PORT}", "-o", "${fileNameWithOutExtension}.hex", "${CLASS_NAME}");
+    /*
+    cd haikuVM\myCProject  
+C:\haikuVM\bin\haiku -v --Config arduino --Config:Port com5 -o BlinkWithThread.hex C:\haikuVM\examples\src\main\java\arduino\tutorial\BlinkWithThread.java  
+     */
+}
+
+task haikuuploadWindow(type: Exec, dependsOn: haikulinkWindow) {
+
+    doFirst{
+        //before run, create build dir
+        file("${project.buildDir}/haiku").mkdir()
+    }
+    
+    workingDir "${project.buildDir}/haiku"
+
+    // -Pprogram_name=ru.timreset.TestProgram
+    final String CLASS_NAME = project.hasProperty("class_name") ? project.property("class_name") : "com.error.NotSetClassName";
+
+    final String fileNameWithOutExtension = CLASS_NAME.substring(CLASS_NAME.lastIndexOf(".") + 1, CLASS_NAME.length());
+
+    //on windows:
+//    commandLine "${HAIKU_VM_HOME}/bin/haiku.bat -v --Config arduino --Config:Port ${COM_PORT} -o ${fileNameWithOutExtension}.hex ${CLASS_NAME}"
+    commandLine "${HAIKU_VM_HOME}/bin/haikuupload.bat"
+    /*
+     *     echo "%JAVA%" "-Dhaikuvm.home=%NXJ_HOME%" "-DCOMMAND_NAME=%NXJ_COMMAND%" -classpath "%NXJ_CP_PC%" haikuvm.pc.tools.HaikuVM %*
+     "%JAVA%" "-Dhaikuvm.home=%NXJ_HOME%" "-DCOMMAND_NAME=%NXJ_COMMAND%" -classpath "%NXJ_CP_PC%" haikuvm.pc.tools.HaikuVM %*
+     */
+    args "-v",
+            "${fileNameWithOutExtension}.hex"
+
+//    args("-v", "--Config", "arduino", "--Config:Port", "${COM_PORT}", "-o", "${fileNameWithOutExtension}.hex", "${CLASS_NAME}");
+    /*
+    cd haikuVM\myCProject  
+C:\haikuVM\bin\haiku -v --Config arduino --Config:Port com5 -o BlinkWithThread.hex C:\haikuVM\examples\src\main\java\arduino\tutorial\BlinkWithThread.java  
+     */
 }
