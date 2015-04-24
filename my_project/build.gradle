@@ -42,8 +42,10 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
+
+final String HAIKU_VM_HOME = "${project.rootDir}/haiku_vm"
+
 task buildAndDeploy(type: Exec) {
-    final String HAIKU_VM_HOME = project.hasProperty("haiku_vm_home") ? project.property("haiku_vm_home") : "C:/";
 
     workingDir "${HAIKU_VM_HOME}/bin/"
 
@@ -71,11 +73,10 @@ C:\haikuVM\bin\haiku -v --Config arduino --Config:Port com5 -o BlinkWithThread.h
 task haikulinkWindow(type: Exec, dependsOn: build) {
     
     doFirst {
+        //before run, create build dir
         file("${project.buildDir}/haiku").mkdir()
     }
     
-    final String HAIKU_VM_HOME = "${project.rootDir}/haiku_vm"
-
     
     workingDir "${project.buildDir}/haiku"
 
@@ -109,9 +110,9 @@ C:\haikuVM\bin\haiku -v --Config arduino --Config:Port com5 -o BlinkWithThread.h
 }
 
 task haikuuploadWindow(type: Exec, dependsOn: haikulinkWindow) {
-    final String HAIKU_VM_HOME = "${project.rootDir}/haiku_vm"
 
     doFirst{
+        //before run, create build dir
         file("${project.buildDir}/haiku").mkdir()
     }
     
