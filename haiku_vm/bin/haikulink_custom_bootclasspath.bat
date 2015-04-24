@@ -122,5 +122,5 @@ if "%OS%" == "Windows_NT" goto :winnt
     echo # error while cross compiling
     echo #############################################################
 :error_exit
-
+exit %error%
 :eof
