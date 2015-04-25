@@ -71,13 +71,13 @@ C:\haikuVM\bin\haiku -v --Config arduino --Config:Port com5 -o BlinkWithThread.h
 }
 
 task haikulinkWindow(type: Exec, dependsOn: build) {
-    
+
     doFirst {
         //before run, create build dir
         file("${project.buildDir}/haiku").mkdir()
     }
-    
-    
+
+
     workingDir "${project.buildDir}/haiku"
 
     // Set port on linking.  -Pcom_port=COM10
@@ -86,8 +86,6 @@ task haikulinkWindow(type: Exec, dependsOn: build) {
     // -Pprogram_name=ru.timreset.TestProgram
     final String CLASS_NAME = project.hasProperty("class_name") ? project.property("class_name") : "com.error.NotSetProgramName";
 
-    final String fileNameWithOutExtension = CLASS_NAME.substring(CLASS_NAME.lastIndexOf(".") + 1, CLASS_NAME.length());
-
     //on windows:
 //    commandLine "${HAIKU_VM_HOME}/bin/haiku.bat -v --Config arduino --Config:Port ${COM_PORT} -o ${fileNameWithOutExtension}.hex ${CLASS_NAME}"
     commandLine "${HAIKU_VM_HOME}/bin/haikulink_custom_bootclasspath.bat"
@@ -95,10 +93,10 @@ task haikulinkWindow(type: Exec, dependsOn: build) {
      *     echo "%JAVA%" "-Dhaikuvm.home=%NXJ_HOME%" "-DCOMMAND_NAME=%NXJ_COMMAND%" -classpath "%NXJ_CP_PC%" haikuvm.pc.tools.HaikuVM %*
      "%JAVA%" "-Dhaikuvm.home=%NXJ_HOME%" "-DCOMMAND_NAME=%NXJ_COMMAND%" -classpath "%NXJ_CP_PC%" haikuvm.pc.tools.HaikuVM %*
      */
+    // not set output file name (-o) because avg-g++ not compile to hex. 
     args "-v",
             "--Config", "arduino",
             "--Config:Port", "${COM_PORT}",
-            "-o", "${fileNameWithOutExtension}.hex",
             "--bootclasspath", "\"${project(":haiku_rt").sourceSets.main.output.classesDir};${project(":bootstrap").sourceSets.main.output.classesDir};${HAIKU_VM_HOME}/lib/nxt/classes.jar\"",
             "-classpath", "\"${sourceSets.main.output.classesDir}\"",
             CLASS_NAME;
@@ -111,17 +109,15 @@ C:\haikuVM\bin\haiku -v --Config arduino --Config:Port com5 -o BlinkWithThread.h
 
 task haikuuploadWindow(type: Exec, dependsOn: haikulinkWindow) {
 
-    doFirst{
+    doFirst {
         //before run, create build dir
         file("${project.buildDir}/haiku").mkdir()
     }
-    
+
     workingDir "${project.buildDir}/haiku"
 
     // -Pprogram_name=ru.timreset.TestProgram
     final String CLASS_NAME = project.hasProperty("class_name") ? project.property("class_name") : "com.error.NotSetClassName";
-
-    final String fileNameWithOutExtension = CLASS_NAME.substring(CLASS_NAME.lastIndexOf(".") + 1, CLASS_NAME.length());
 
     //on windows:
 //    commandLine "${HAIKU_VM_HOME}/bin/haiku.bat -v --Config arduino --Config:Port ${COM_PORT} -o ${fileNameWithOutExtension}.hex ${CLASS_NAME}"
@@ -131,7 +127,7 @@ task haikuuploadWindow(type: Exec, dependsOn: haikulinkWindow) {
      "%JAVA%" "-Dhaikuvm.home=%NXJ_HOME%" "-DCOMMAND_NAME=%NXJ_COMMAND%" -classpath "%NXJ_CP_PC%" haikuvm.pc.tools.HaikuVM %*
      */
     args "-v",
-            "${fileNameWithOutExtension}.hex"
+            "${CLASS_NAME}.hex"
 
 //    args("-v", "--Config", "arduino", "--Config:Port", "${COM_PORT}", "-o", "${fileNameWithOutExtension}.hex", "${CLASS_NAME}");
     /*
