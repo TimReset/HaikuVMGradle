@@ -6,8 +6,6 @@ sourceCompatibility = 1.7
 
 evaluationDependsOn(':haiku_rt')
 
-evaluationDependsOn(':haiku_rt')
-
 dependencies {
    compile project(":haiku_rt")
 }
