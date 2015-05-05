@@ -8,3 +8,23 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
+repositories {
+    mavenCentral()
+    jcenter()
+
+/*
+Локальный maven репозиторий для проекта. Нужен, чтобы предоставить зависимотсти, которых нет в центральном maven репозитории.
+Используется вместо простой папки с jar файлами, чтобы зависимости можно было предоставить вместе с JavaDoc и Source.
+Для добавления jar в этот репозиторий нужно выполнить следующую команду:
+mvn deploy:deploy-file -Durl=file://D:\project\acube_gradle_trunk\repo\ -Dfile=gwtext.jar -DgroupId=com.gwt-ext -DartifactId=gwt-ext -Dpackaging=jar -Dversion=2.0.6.1 -Djavadoc=gwtext-javadoc.jar -Dsources=gwtext-src.jar
+*/
+    maven {
+        url "../repo"
+    }
+}
+
+dependencies {
+    //add nxt dependence
+    compile "org.haiku-vm.nxt:classes:1.2.3"
+}
+
