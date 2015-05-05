@@ -1,7 +1,7 @@
 package ru.timreset;
 
 /**
- * @author averin
+ * @author TimReset
  * @date 24.04.2015
  */
 public enum ArduinoEnum {

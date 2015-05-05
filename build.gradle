@@ -1,0 +1,15 @@
+apply plugin: 'idea'
+
+/*
+allprojects {
+//    task hello << {task -> println "I'm $task.project.name" }
+    apply plugin: 'idea'
+}
+*/
+/*
+subprojects {
+    hello << {println "- I depend on water"}
+}
+project(':bluewhale').hello << {
+    println "- I'm the largest animal that has ever lived on this planet."
+}*/

@@ -2,6 +2,8 @@ apply plugin: 'java'
 
 sourceCompatibility = 1.7
 
+
+
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
@@ -15,13 +17,6 @@ repositories {
 Используется вместо простой папки с jar файлами, чтобы зависимости можно было предоставить вместе с JavaDoc и Source.
 Для добавления jar в этот репозиторий нужно выполнить следующую команду:
 mvn deploy:deploy-file -Durl=file://D:\project\acube_gradle_trunk\repo\ -Dfile=gwtext.jar -DgroupId=com.gwt-ext -DartifactId=gwt-ext -Dpackaging=jar -Dversion=2.0.6.1 -Djavadoc=gwtext-javadoc.jar -Dsources=gwtext-src.jar
-Для добавления SmartGWT в этот репозиторий нужно выполнить следующую команду
-(т.к. SmartGwt не содержит своего репозитория, но у него есть maven плагин, который позволяет просто добавлять SmartGwt 
-в локальный репозиторий):  
-mvn com.isomorphic:isc-maven-plugin:deploy -DrepositoryUrl=file://D:\project\acube_gradle_trunk\repo\ -Dproduct=SMARTGWT -Dlicense=LGPL -DbuildNumber=5.0p -DbuildDate=2014-10-12
--DbuildDate=2014-10-12 - необязательно, если не указывать будет скачана последняя версия
--DbuildNumber=5.0p - "p" означает что это версия только с патчами, без глобальных изменений (использовать нужно только её).
-Ещё есть версия "d" - developer. Там содержится новый нестабильный функционал. Её использовать в production не рекомендуется.
 */
     maven {
         url "../repo"
@@ -31,19 +26,27 @@ mvn com.isomorphic:isc-maven-plugin:deploy -DrepositoryUrl=file://D:\project\acu
 evaluationDependsOn(':haiku_rt')
 evaluationDependsOn(':bootstrap')
 
+final String HAIKU_VM_HOME = "${project.rootDir}/haiku_vm"
+
+final String BOOTCLASSPATH = "${project(":haiku_rt").sourceSets.main.output.classesDir};${project(":bootstrap").sourceSets.main.output.classesDir};${HAIKU_VM_HOME}/lib/nxt/classes.jar"
+
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
-    options.compilerArgs << "-Xbootclasspath/p:" + project(":haiku_rt").sourceSets.main.output.classesDir
+    //use "bootclasspath" like in haiku compiler. 
+    options.compilerArgs << "-Xbootclasspath:${BOOTCLASSPATH}"
 }
 
 dependencies {
     compile project(":haiku_rt")
     compile project(":bootstrap")
+    
+    //add mylib dependence
+    compile "org.haiku-vm.example:my-lib:1.2.3"
+    
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
 
-final String HAIKU_VM_HOME = "${project.rootDir}/haiku_vm"
 
 task buildAndDeploy(type: Exec) {
 
@@ -89,7 +92,7 @@ task haikulinkWindow(type: Exec, dependsOn: build) {
     //on windows:
 //    commandLine "${HAIKU_VM_HOME}/bin/haiku.bat -v --Config arduino --Config:Port ${COM_PORT} -o ${fileNameWithOutExtension}.hex ${CLASS_NAME}"
     commandLine "${HAIKU_VM_HOME}/bin/haikulink_custom_bootclasspath.bat"
-    /*
+    /*    
      *     echo "%JAVA%" "-Dhaikuvm.home=%NXJ_HOME%" "-DCOMMAND_NAME=%NXJ_COMMAND%" -classpath "%NXJ_CP_PC%" haikuvm.pc.tools.HaikuVM %*
      "%JAVA%" "-Dhaikuvm.home=%NXJ_HOME%" "-DCOMMAND_NAME=%NXJ_COMMAND%" -classpath "%NXJ_CP_PC%" haikuvm.pc.tools.HaikuVM %*
      */
@@ -97,8 +100,9 @@ task haikulinkWindow(type: Exec, dependsOn: build) {
     args "-v",
             "--Config", "arduino",
             "--Config:Port", "${COM_PORT}",
-            "--bootclasspath", "\"${project(":haiku_rt").sourceSets.main.output.classesDir};${project(":bootstrap").sourceSets.main.output.classesDir};${HAIKU_VM_HOME}/lib/nxt/classes.jar\"",
-            "-classpath", "\"${sourceSets.main.output.classesDir}\"",
+            "--bootclasspath", "\"${BOOTCLASSPATH}\"",
+            // Add compile classpath. Need for use external librally in dependience.  
+            "-classpath", "\"${sourceSets.main.output.classesDir};${sourceSets.main.compileClasspath.asPath}\"",
             CLASS_NAME;
 //    args("-v", "--Config", "arduino", "--Config:Port", "${COM_PORT}", "-o", "${fileNameWithOutExtension}.hex", "${CLASS_NAME}");
     /*

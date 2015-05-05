@@ -1,11 +1,7 @@
 package ru.timreset;
 
-import haiku.arduino.api.Arduino;
-
-import java.lang.reflect.Method;
-
 /**
- * @author averin
+ * @author TimReset
  * @date 23.04.2015
  */
 public class TestProgram {
@@ -15,14 +11,7 @@ public class TestProgram {
 	}
 
 	public static void main(String[] args) {
-		Method[] m = TestProgram2.class.getDeclaredMethods();
 
-		while (true) {
-			for (Method method : m) {
-				Arduino.Serial.println(method.getName());
-			}
-
-		}
 	}
 
 	/**
